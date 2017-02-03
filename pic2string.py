@@ -1,5 +1,5 @@
 from PIL import Image, ImageFilter
-filename = "polymon_images/logo.bmp"
+filename = "polymon_images/logorotated.bmp"
 print("File name: " + filename)
 
 try:
@@ -19,7 +19,7 @@ heximage = []
 for xpix in range(0, dimx):
     thisrow = []
     onebyte = ""
-    for ypix in range(dimy-1, 1, -1):
+    for ypix in range(dimy-1, -1, -1):
         rgb_tuple = rgb_im.getpixel((xpix, ypix))
         if rgb_tuple[0]==0:
             #is black
@@ -31,16 +31,19 @@ for xpix in range(0, dimx):
             print("Error: There is only black and white morality, foolish mortal.")
             
         if len(onebyte) == 8:
-            newbyte = hex(int(onebyte,2)).upper()
+            hexbyte = hex(int(onebyte,2))
+            newbyte = hexbyte[0:2] + hexbyte[2].upper()
             if len(newbyte) == 3: newbyte = newbyte[0:2] + "0" + newbyte[2:3]
             thisrow.append(newbyte)
             onebyte = ""
+    #print(len(onebyte))
     heximage.append(thisrow)
     
 fstr = "{"
 
 for row in heximage:
-    fstr += "{" + str(row)[1:-1] + "}\n"
+    strippedrow = str(row)[1:-1].replace("'", "")
+    fstr += "{" + strippedrow + "},\n"
     
 fstr += "}"
 
