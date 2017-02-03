@@ -1,5 +1,5 @@
 from PIL import Image, ImageFilter
-filename = "polymon_images/logo.bmp"
+filename = "polymon_images/logo2.bmp"
 print("File name: " + filename)
 
 try:
@@ -31,17 +31,27 @@ for ypix in range(0, dimy):
             print("Error: There is only black and white morality, foolish mortal.")
             
         if len(onebyte) == 8:
+            onebyte = onebyte[::-1]
             hexbyte = hex(int(onebyte,2))
             newbyte = hexbyte[0:2] + hexbyte[2:].upper()
             if len(newbyte) == 3: newbyte = newbyte[0:2] + "0" + newbyte[2:3]
             thisrow.append(newbyte)
             onebyte = ""
     #print(len(onebyte))
+    while len(onebyte) < 8: onebyte += "0"
+    onebyte = onebyte[::-1]
+    hexbyte = hex(int(onebyte,2))
+    newbyte = hexbyte[0:2] + hexbyte[2:].upper()
+    
+    if len(newbyte) == 3: newbyte = newbyte[0:2] + "0" + newbyte[2:3]
+    thisrow.append(newbyte)
+    onebyte = ""    
     heximage.append(thisrow)
     
 fstr = "{"
 
 for row in heximage:
+    #row = heximage[len(heximage)-i-1]
     strippedrow = str(row)[1:-1].replace("'", "")
     fstr += "{" + strippedrow + "},\n"
     
