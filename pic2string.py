@@ -16,10 +16,10 @@ rgb_im = im.convert('RGB')
 
 heximage = []
 
-for xpix in range(0, dimx):
+for ypix in range(0, dimy):
     thisrow = []
     onebyte = ""
-    for ypix in range(dimy-1, -1, -1):
+    for xpix in range(0, dimx):
         rgb_tuple = rgb_im.getpixel((xpix, ypix))
         if rgb_tuple[0]==0:
             #is black
