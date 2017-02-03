@@ -1,5 +1,5 @@
 from PIL import Image, ImageFilter
-filename = "polymon_images/logorotated.bmp"
+filename = "polymon_images/allblack.bmp"
 print("File name: " + filename)
 
 try:
