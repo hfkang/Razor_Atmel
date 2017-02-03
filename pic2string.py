@@ -32,7 +32,7 @@ for xpix in range(0, dimx):
             
         if len(onebyte) == 8:
             hexbyte = hex(int(onebyte,2))
-            newbyte = hexbyte[0:2] + hexbyte[2].upper()
+            newbyte = hexbyte[0:2] + hexbyte[2:].upper()
             if len(newbyte) == 3: newbyte = newbyte[0:2] + "0" + newbyte[2:3]
             thisrow.append(newbyte)
             onebyte = ""
