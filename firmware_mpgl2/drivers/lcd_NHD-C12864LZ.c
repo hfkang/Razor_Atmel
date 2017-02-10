@@ -246,6 +246,8 @@ extern const u8 aau8EngenuicsLogoBlackQ1[LCD_IMAGE_ROW_SIZE_25PX][LCD_IMAGE_COL_
 extern const u8 aau8EngenuicsLogoBlackQ2[LCD_IMAGE_ROW_SIZE_25PX][LCD_IMAGE_COL_BYTES_25PX]; /* From lcd_bitmaps.c */
 extern const u8 aau8EngenuicsLogoBlackQ3[LCD_IMAGE_ROW_SIZE_25PX][LCD_IMAGE_COL_BYTES_25PX]; /* From lcd_bitmaps.c */
 extern const u8 aau8EngenuicsLogoBlackQ4[LCD_IMAGE_ROW_SIZE_25PX][LCD_IMAGE_COL_BYTES_25PX]; /* From lcd_bitmaps.c */
+extern const u8 paletteHEX[LCD_IMAGE_ROW_SIZE_FS][LCD_IMAGE_COL_BYTES_FS]; 
+
 
 extern volatile fnCode_type G_SspStateMachine;         /* From sam3u_ssp.c */
 
@@ -702,6 +704,7 @@ void LcdInitialize(void)
 {
   u8 u8Size;
   PixelBlockType sEngenuicsImage;
+  PixelBlockType paletteImage;
   PixelAddressType sStringLocation;
   
   /* Start with backlight on */
@@ -810,17 +813,25 @@ void LcdInitialize(void)
   
   /* Show static image in middle of screen */
   LcdClearPixels(&G_sLcdClearWholeScreen);
-  
+  /*
   sEngenuicsImage.u16RowStart = 0;
   sEngenuicsImage.u16ColumnStart = 40;
   sEngenuicsImage.u16RowSize = LCD_IMAGE_ROW_SIZE_50PX;
   sEngenuicsImage.u16ColumnSize = LCD_IMAGE_COL_SIZE_50PX;
   LcdLoadBitmap(&aau8EngenuicsLogoBlack[0][0], &sEngenuicsImage);
+  */
+  
+  paletteImage.u16RowStart = 0;
+  paletteImage.u16ColumnStart = 0;
+  paletteImage.u16RowSize = LCD_IMAGE_ROW_SIZE_FS;
+  paletteImage.u16ColumnSize = LCD_IMAGE_COL_SIZE_FS; 
+  LcdLoadBitmap(&paletteHEX[0][0], &paletteImage);
 
+  
   /* Write the MPGL2 String in the middle */
-  sStringLocation.u16PixelColumnAddress = LCD_CENTER_COLUMN - ( strlen((char const*)Lcd_au8MessageWelcome) * (LCD_SMALL_FONT_COLUMNS + LCD_SMALL_FONT_SPACE) / 2 );
-  sStringLocation.u16PixelRowAddress = LCD_SMALL_FONT_LINE7;
-  LcdLoadString(Lcd_au8MessageWelcome, LCD_FONT_SMALL, &sStringLocation);
+  //sStringLocation.u16PixelColumnAddress = LCD_CENTER_COLUMN - ( strlen((char const*)Lcd_au8MessageWelcome) * (LCD_SMALL_FONT_COLUMNS + LCD_SMALL_FONT_SPACE) / 2 );
+  //sStringLocation.u16PixelRowAddress = LCD_SMALL_FONT_LINE7;
+  //LcdLoadString(Lcd_au8MessageWelcome, LCD_FONT_SMALL, &sStringLocation);
 
   LcdManualMode();
 #endif /* LCD_STARTUP_ANIMATION */
