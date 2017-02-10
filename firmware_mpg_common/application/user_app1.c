@@ -1,14 +1,14 @@
 /**********************************************************************************************************************
-File: user_app1.c                                                                
+File: user_app.c                                                                
 
 ----------------------------------------------------------------------------------------------------------------------
-To start a new task using this user_app1 as a template:
- 1. Copy both user_app1.c and user_app1.h to the Application directory
+To start a new task using this user_app as a template:
+ 1. Copy both user_app.c and user_app.h to the Application directory
  2. Rename the files yournewtaskname.c and yournewtaskname.h
  3. Add yournewtaskname.c and yournewtaskname.h to the Application Include and Source groups in the IAR project
- 4. Use ctrl-h (make sure "Match Case" is checked) to find and replace all instances of "user_app1" with "yournewtaskname"
- 5. Use ctrl-h to find and replace all instances of "UserApp1" with "YourNewTaskName"
- 6. Use ctrl-h to find and replace all instances of "USER_APP1" with "YOUR_NEW_TASK_NAME"
+ 4. Use ctrl-h (make sure "Match Case" is checked) to find and replace all instances of "user_app" with "yournewtaskname"
+ 5. Use ctrl-h to find and replace all instances of "UserApp" with "YourNewTaskName"
+ 6. Use ctrl-h to find and replace all instances of "USER_APP" with "YOUR_NEW_TASK_NAME"
  7. Add a call to YourNewTaskNameInitialize() in the init section of main
  8. Add a call to YourNewTaskNameRunActiveState() in the Super Loop section of main
  9. Update yournewtaskname.h per the instructions at the top of yournewtaskname.h
@@ -16,7 +16,7 @@ To start a new task using this user_app1 as a template:
 ----------------------------------------------------------------------------------------------------------------------
 
 Description:
-This is a user_app1.c file template 
+This is a user_app.c file template 
 
 ------------------------------------------------------------------------------------------------------------------------
 API:
@@ -25,10 +25,10 @@ Public functions:
 
 
 Protected System functions:
-void UserApp1Initialize(void)
+void Initialize(void)
 Runs required initialzation for the task.  Should only be called once in main init section.
 
-void UserApp1RunActiveState(void)
+void UserAppRunActiveState(void)
 Runs current task state.  Should only be called once in main loop.
 
 
@@ -43,6 +43,11 @@ All Global variable names shall start with "G_"
 /* New variables */
 volatile u32 G_u32UserApp1Flags;                       /* Global state flags */
 
+u8 msg1[] = "BUT0:   times.\0";
+u8 msg2[] = {48,0};
+u8 buttoncount = 0;
+PixelAddressType home = {0, 0};
+PixelAddressType row1 = {0, 36};
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 /* Existing variables (defined in other files -- should all contain the "extern" keyword) */
@@ -88,6 +93,14 @@ Promises:
 */
 void UserApp1Initialize(void)
 {
+
+    LcdClearScreen();  
+    LcdLoadString(msg1, 0, &home); 
+    LcdLoadString(msg2, 0, &row1);
+
+    
+
+
   /* If good initialization, set state to Idle */
   if( 1 )
   {
@@ -136,8 +149,19 @@ State Machine Function Definitions
 /* Wait for a message to be queued */
 static void UserApp1SM_Idle(void)
 {
-    
-} /* end UserApp1SM_Idle() */
+  if(WasButtonPressed(BUTTON0))
+  {
+    ButtonAcknowledge(BUTTON0);
+    buttoncount = buttoncount + 1;   
+    msg2[0] = buttoncount + 48;
+    LcdClearScreen();  
+    LcdLoadString(msg1, 0, &home); 
+    LcdLoadString(msg2, 0, &row1);
+  }
+  else{
+  }
+
+} /* end UserAppSM_Idle() */
      
 #if 0
 /*-------------------------------------------------------------------------------------------------------------------*/
@@ -145,7 +169,7 @@ static void UserApp1SM_Idle(void)
 static void UserApp1SM_Error(void)          
 {
   
-} /* end UserApp1SM_Error() */
+} /* end UserAppSM_Error() */
 #endif
 
 
@@ -154,8 +178,7 @@ static void UserApp1SM_Error(void)
 static void UserApp1SM_FailedInit(void)          
 {
     
-} /* end UserApp1SM_FailedInit() */
-
+} /* end UserAppSM_FailedInit() */
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 /* End of File                                                                                                        */

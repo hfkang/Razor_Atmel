@@ -116,6 +116,10 @@ typedef struct
 #define LCD_IMAGE_COL_BYTES_25PX      (u8)((LCD_IMAGE_COL_SIZE_25PX * LCD_PIXEL_BITS / 8) + 1)
 #define LCD_IMAGE_ROW_SIZE_25PX       (u8)25
 
+#define LCD_IMAGE_COL_BYTES_FS      (u8)((128 * LCD_PIXEL_BITS / 8) +1 )
+#define LCD_IMAGE_ROW_SIZE_FS       (u8)64
+#define LCD_IMAGE_COL_SIZE_FS       (u8)128
+
 #define LCD_SMALL_FONT_ROW_SPACING    (u8)1
 #define LCD_SMALL_FONT_LINE0          (u8)(0)
 #define LCD_SMALL_FONT_LINE1          (u8)(1 * (LCD_SMALL_FONT_ROWS + LCD_SMALL_FONT_ROW_SPACING))
