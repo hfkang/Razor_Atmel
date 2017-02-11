@@ -24,9 +24,11 @@ for ypix in range(0, dimy):
         if rgb_tuple[0]==0:
             #is black
             onebyte = onebyte + "1"
+            print("[]", end="")
         elif rgb_tuple[0]==255:
             #is white
             onebyte = onebyte + "0"
+            print("  ", end="")
         else:
             print("Error: There is only black and white morality, foolish mortal.")
             
@@ -37,17 +39,22 @@ for ypix in range(0, dimy):
             if len(newbyte) == 3: newbyte = newbyte[0:2] + "0" + newbyte[2:3]
             thisrow.append(newbyte)
             onebyte = ""
-    #print(len(onebyte))
-    while len(onebyte) < 8: onebyte += "0"
-    onebyte = onebyte[::-1]
-    hexbyte = hex(int(onebyte,2))
-    newbyte = hexbyte[0:2] + hexbyte[2:].upper()
-    
-    if len(newbyte) == 3: newbyte = newbyte[0:2] + "0" + newbyte[2:3]
-    thisrow.append(newbyte)
-    onebyte = ""    
-    heximage.append(thisrow)
-    
+
+    # padding extra zeros
+    if onebyte != "":
+        print("flag")
+        while len(onebyte) < 8: onebyte += "0"
+        onebyte = onebyte[::-1]
+        hexbyte = hex(int(onebyte,2))
+        newbyte = hexbyte[0:2] + hexbyte[2:].upper()    
+        if len(newbyte) == 3: newbyte = newbyte[0:2] + "0" + newbyte[2:3]
+        thisrow.append(newbyte)
+        onebyte = ""    
+        
+    if len(thisrow) > 0: 
+        heximage.append(thisrow)
+        print("")
+
 fstr = "{"
 
 for row in heximage:
@@ -55,6 +62,7 @@ for row in heximage:
     strippedrow = str(row)[1:-1].replace("'", "")
     fstr += "{" + strippedrow + "},\n"
     
+fstr = fstr[:-2]
 fstr += "}"
 
 print(fstr)

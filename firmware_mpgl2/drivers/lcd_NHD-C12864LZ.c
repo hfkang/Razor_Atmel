@@ -813,20 +813,20 @@ void LcdInitialize(void)
   
   /* Show static image in middle of screen */
   LcdClearPixels(&G_sLcdClearWholeScreen);
+  
   /*
   sEngenuicsImage.u16RowStart = 0;
   sEngenuicsImage.u16ColumnStart = 40;
   sEngenuicsImage.u16RowSize = LCD_IMAGE_ROW_SIZE_50PX;
   sEngenuicsImage.u16ColumnSize = LCD_IMAGE_COL_SIZE_50PX;
   LcdLoadBitmap(&aau8EngenuicsLogoBlack[0][0], &sEngenuicsImage);
-  */
   
+  */
   paletteImage.u16RowStart = 0;
   paletteImage.u16ColumnStart = 0;
-  paletteImage.u16RowSize = LCD_IMAGE_ROW_SIZE_FS;
-  paletteImage.u16ColumnSize = LCD_IMAGE_COL_SIZE_FS; 
+  paletteImage.u16RowSize = 64;
+  paletteImage.u16ColumnSize = 128; 
   LcdLoadBitmap(&paletteHEX[0][0], &paletteImage);
-
   
   /* Write the MPGL2 String in the middle */
   //sStringLocation.u16PixelColumnAddress = LCD_CENTER_COLUMN - ( strlen((char const*)Lcd_au8MessageWelcome) * (LCD_SMALL_FONT_COLUMNS + LCD_SMALL_FONT_SPACE) / 2 );
