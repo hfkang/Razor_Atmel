@@ -1,6 +1,6 @@
 /**********************************************************************************************************************
 File: battle.c                                                                
-
+ 
 ----------------------------------------------------------------------------------------------------------------------
 To start a new task using this battle as a template:
  1. Copy both battle.c and battle.h to the Application directory
@@ -43,11 +43,24 @@ All Global variable names shall start with "G_"
 /* New variables */
 volatile u32 G_u32BattleModeFlags;                       /* Global state flags */
 
+u16 cycleCount = 0;
+
 u8 msg1[] = "BUT0:   times.\0";
 u8 msg2[] = {48,0};
+u8 msg_wild1[] = "A wild ";
+u8 msg_wild2[] = " appeared!";
+u8 squaremon[] = "square";
+u8 hexmon[] = "hexmon!";
+u8 msg_send1[] = "Go ";
+
+
 u8 buttoncount = 0;
 PixelAddressType home = {0, 0};
 PixelAddressType row1 = {0, 36};
+PixelAddressType bottom = {57,0};
+PixelAddressType bottom2 = {57, 71};
+PixelAddressType bottom3 = {57, 20};
+PixelAddressType bottomSpace = {57, 39};
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 /* Existing variables (defined in other files -- should all contain the "extern" keyword) */
@@ -104,7 +117,7 @@ void BattleModeInitialize(void)
   /* If good initialization, set state to Idle */
   if( 1 )
   {
-    BattleMode_StateMachine = BattleModeSM_Idle;
+    BattleMode_StateMachine = BattleModeSM_WildPolymon;
   }
   else
   {
@@ -145,18 +158,43 @@ void BattleModeRunActiveState(void)
 State Machine Function Definitions
 **********************************************************************************************************************/
 
+static void BattleModeSM_WildPolymon(void) {
+    LcdClearScreen();
+    LcdLoadString(msg_wild1, 0, &bottom);
+    LcdLoadString(msg_wild2, 0, &bottom2);
+    LcdLoadString(squaremon, 0 , &bottomSpace);
+    cycleCount++;
+    if(cycleCount > 2000){
+      BattleMode_StateMachine = BattleModeSM_SendPolymon;
+    }
+}
+  
+static void BattleModeSM_SendPolymon(void) {
+  LcdClearScreen();
+  LcdLoadString(msg_send1, 0, &bottom);
+  LcdLoadString(hexmon, 0, &bottom3);
+  
+      
+}
+
 /*-------------------------------------------------------------------------------------------------------------------*/
 /* Wait for a message to be queued */
 static void BattleModeSM_Idle(void)
 {
+  LcdClearScreen();  
+    LcdLoadString(msg1, 0, &home); 
+    LcdLoadString(msg2, 0, &row1);
   if(WasButtonPressed(BUTTON0))
   {
     ButtonAcknowledge(BUTTON0);
     buttoncount = buttoncount + 1;   
+
     msg2[0] = buttoncount + 48;
     LcdClearScreen();  
-    LcdLoadString(msg1, 0, &home); 
     LcdLoadString(msg2, 0, &row1);
+    LcdLoadString(msg1, 0, &home); 
+    if (buttoncount==10)
+      BattleMode_StateMachine = BattleModeSM_WildPolymon;
   }
   else{
   }

@@ -69,7 +69,7 @@ void main(void)
   AntInitialize();
   
   /* Application initialization */
-  UserApp1Initialize();
+  BattleModeInitialize();
   UserApp2Initialize();
   UserApp3Initialize();
   
@@ -95,7 +95,7 @@ void main(void)
     AntRunActiveState();
 
     /* Applications */
-    UserApp1RunActiveState();
+    BattleModeRunActiveState();
     UserApp2RunActiveState();
     UserApp3RunActiveState();
         

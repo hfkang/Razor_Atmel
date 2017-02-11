@@ -2065,6 +2065,9 @@
     <group>
       <name>Include</name>
       <file>
+        <name>$PROJ_DIR$\..\..\firmware_mpg_common\application\battle.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\..\firmware_mpg_common\application\debug.h</name>
       </file>
       <file>
@@ -2072,9 +2075,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_mpg_common\application\music.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\firmware_mpg_common\application\user_app1.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_mpg_common\application\user_app2.h</name>
@@ -2086,13 +2086,13 @@
     <group>
       <name>Source</name>
       <file>
+        <name>$PROJ_DIR$\..\..\firmware_mpg_common\application\battle.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\..\firmware_mpg_common\application\debug.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\application\main.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\..\firmware_mpg_common\application\user_app1.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_mpg_common\application\user_app2.c</name>
